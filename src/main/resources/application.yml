@@ -1,2 +1,13 @@
 server:
   port: 9010
+
+spring:
+  datasource:
+    username: adrian
+    password: Adrian1999
+    driver-class: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/main
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update

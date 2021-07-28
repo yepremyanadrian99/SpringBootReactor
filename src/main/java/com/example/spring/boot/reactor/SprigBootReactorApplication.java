@@ -1,17 +1,22 @@
 package com.example.spring.boot.reactor;
 
-import com.example.spring.boot.reactor.client.GreetingWebClient;
+import java.util.concurrent.Executors;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 @SpringBootApplication
 public class SprigBootReactorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SprigBootReactorApplication.class, args);
-
-        GreetingWebClient greetingWebClient = new GreetingWebClient();
-        System.out.println(greetingWebClient.getResult());
     }
 
+    @Bean
+    public Scheduler jdbcScheduler() {
+        return Schedulers.fromExecutor(Executors.newWorkStealingPool());
+    }
 }
