@@ -5,7 +5,6 @@ import java.util.Objects;
 import com.example.spring.boot.reactor.handler.UserHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -20,13 +19,14 @@ public class UserRouter {
     RouterFunction<ServerResponse> userRoute(UserHandler handler) {
         return RouterFunctions.route(
             RequestPredicates.GET(BASE_URL + "/find")
-                .and(RequestPredicates.method(HttpMethod.GET))
                 .and(RequestPredicates.queryParam("name", Objects::nonNull)),
             handler::findByName
         ).andRoute(
-            RequestPredicates.GET(BASE_URL + "/findAll")
-                .and(RequestPredicates.method(HttpMethod.GET)),
+            RequestPredicates.GET(BASE_URL + "/findAll"),
             handler::findAll
+        ).andRoute(
+            RequestPredicates.POST(BASE_URL + "/create"),
+            handler::create
         );
     }
 }
